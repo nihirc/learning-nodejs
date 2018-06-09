@@ -28,8 +28,11 @@ let addNote = (title, body) => {
         fs.writeFileSync('notes-data.json', JSON.stringify(notes));
         console.log("Successfully added note");
     }).catch((err) => {
-        console.log("Unable to read the file. Check that the file exists.");
+        console.log("Unable to read the file. Creating the file...");
         console.log("Error: " + err)
+        notes.push(note);
+        fs.writeFileSync('notes-data.json', JSON.stringify(notes));
+        console.log("Successfully added note");
     });
 };
 
@@ -76,19 +79,36 @@ let removeNote = (title) => {
     readFile("./notes-data.json", "utf-8").then(file => {
         if (file.length > 0) {
             let data = JSON.parse(file);
-            delete data[0][title];
-            notes = data;
+            data.forEach( (item) => {
+                if (item.title === title) {
+                    data.splice(item, 1);
+                }
+            });
+            // for (let i = 0; i < data.length; i++) {
+            //     console.log(data[i].title);
+            //     if (data[i].title === title) {
+            //         data[i].splice(i, 1);
+            //         break;
+            //     } else {
+            //         console.log("No note found with title: " + title);
+            //     }
+            // }
+
             const truncate = promisify(fs.truncate);
             truncate('notes-data.json', 0).then( () => {
                 console.log("Successfully cleared the file");
-                fs.writeFileSync('notes-data.json', JSON.stringify(notes));
-                console.log("Successfully wrote to the file")
+                if (data.length > 0) {
+                    fs.writeFileSync('notes-data.json', JSON.stringify(data));
+                    console.log("Successfully wrote to the file");
+                }
             }).catch((err) => {
                 console.log("Failed to clear the file.")
                 console.log("Error: " + err)
             });
+        } else {
+            console.log("Failed to remove the note")
         }
-    }).catch((err) => {
+        }).catch((err) => {
         console.log("An error encountered.");
         console.log("Error: " + err);
     });
