@@ -1,0 +1,15 @@
+{
+  "name": "famous-quotes",
+  "version": "1.0.0",
+  "description": "Application will return number (as requested) of famous quotes for a particular category.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nihir Chadderwala",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "yargs": "^11.0.0"
+  }
+}
