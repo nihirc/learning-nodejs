@@ -22,7 +22,7 @@ const url = `https://andruxnet-random-famous-quotes.p.mashape.com/?cat=${argv.c}
 
 
 axios.post(url, null, {
-    headers: {'X-Mashape-Key': 'C1SMDyqFVsmshTdA0WE7yViOZQ9Ep1TT2z2jsnVM0FlK72AdtD',
+    headers: {'X-Mashape-Key': 'XXXXX',
         "Content-Type": "application/x-www-form-urlencoded",
         "Accept": "application/json"}
 }).then((data) => {
