@@ -74,7 +74,6 @@ let getNote = (title) => {
 };
 
 let removeNote = (title) => {
-    let notes = [];
     console.log("Removing note with title: " + title);
     readFile("./notes-data.json", "utf-8").then(file => {
         if (file.length > 0) {
@@ -84,15 +83,6 @@ let removeNote = (title) => {
                     data.splice(item, 1);
                 }
             });
-            // for (let i = 0; i < data.length; i++) {
-            //     console.log(data[i].title);
-            //     if (data[i].title === title) {
-            //         data[i].splice(i, 1);
-            //         break;
-            //     } else {
-            //         console.log("No note found with title: " + title);
-            //     }
-            // }
 
             const truncate = promisify(fs.truncate);
             truncate('notes-data.json', 0).then( () => {
