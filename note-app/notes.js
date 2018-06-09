@@ -78,8 +78,15 @@ let removeNote = (title) => {
             let data = JSON.parse(file);
             delete data[0][title];
             notes = data;
-            fs.truncate('notes-data.json', 0);
-            fs.writeFileSync('notes-data.json', JSON.stringify(notes));
+            const truncate = promisify(fs.truncate);
+            truncate('notes-data.json', 0).then( () => {
+                console.log("Successfully cleared the file");
+                fs.writeFileSync('notes-data.json', JSON.stringify(notes));
+                console.log("Successfully wrote to the file")
+            }).catch((err) => {
+                console.log("Failed to clear the file.")
+                console.log("Error: " + err)
+            });
         }
     }).catch((err) => {
         console.log("An error encountered.");
